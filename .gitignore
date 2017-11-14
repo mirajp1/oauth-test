@@ -57,5 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
-#config file
-config.js
+#config files
+config/
