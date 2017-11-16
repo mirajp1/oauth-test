@@ -2,7 +2,9 @@ const router = require('express').Router();
 const passport = require('passport');
 
 router.get('/login',(req,res)=>{
-    res.render('login');
+    if(req.user)
+        res.redirect('/profile');
+    res.render('login',{profile:req.user});
 });
 
 router.get('/google',passport.authenticate('google',{
@@ -10,12 +12,15 @@ router.get('/google',passport.authenticate('google',{
 }));
 
 router.get('/google/callback',passport.authenticate('google'),(req,res)=>{
-    res.send('you reached callback url');
+    // res.send(req.user);
+    res.redirect('/profile/');
 });
 
 router.get('/logout',(req,res)=>{
     //TODO: handle with passport
-    res.send('logging out');
+    // res.send('logging out');
+    req.logout();
+    res.redirect('/');
 })
 
 module.exports=router;
